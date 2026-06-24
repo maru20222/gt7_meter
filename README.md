@@ -1,4 +1,4 @@
-# GT7 Meter
+# GT7 UDP telemetry digital speedometer
 
 Gran Turismo 7 のテレメトリUDPを受信して、速度（km/h）を大きく表示するシンプルなデジタルメーターです。
 
