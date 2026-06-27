@@ -122,18 +122,19 @@ root.protocol("WM_DELETE_WINDOW", on_close)
 
 # 速度の数字表示（フォントサイズや色は自由に変えられます）
 label_speed = tk.Label(root, text="0", font=("Helvetica", 200, "bold"), fg="white", bg="black")
-label_speed.pack(expand=True, pady=(50, 0))
+label_speed.pack(expand=True, fill='both')
 
-# 単位表示
+# 単位表示（下部に固定）
 label_unit = tk.Label(root, text="km/h", font=("Helvetica", 30), fg="gray", bg="black")
-label_unit.pack(expand=True, pady=(0, 50))
+label_unit.pack(side='bottom', pady=(0, 20))
 
 # ウィンドウサイズ変更時にスピード文字サイズを追従させる
 def on_resize(event):
     if event.widget != root:
         return
-    # ウィンドウ高さの約60%をフォントサイズとして使用
-    new_size = max(80, int(root.winfo_height() * 0.6))
+    # 単位ラベル分を除いたスペースの高さに対して50%をフォントサイズとして使用
+    available_height = root.winfo_height() - label_unit.winfo_reqheight() - 20
+    new_size = max(80, int(available_height * 0.5))
     label_speed.config(font=("Helvetica", new_size, "bold"))
 
 root.bind('<Configure>', on_resize)
