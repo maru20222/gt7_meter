@@ -130,8 +130,10 @@ label_unit.pack(expand=True, pady=(0, 50))
 
 # ウィンドウサイズ変更時にスピード文字サイズを追従させる
 def on_resize(event):
-    # ウィンドウ高さの約45%をフォントサイズとして使用
-    new_size = max(40, int(event.height * 0.45))
+    if event.widget != root:
+        return
+    # ウィンドウ高さの約60%をフォントサイズとして使用
+    new_size = max(80, int(root.winfo_height() * 0.6))
     label_speed.config(font=("Helvetica", new_size, "bold"))
 
 root.bind('<Configure>', on_resize)
