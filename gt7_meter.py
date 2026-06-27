@@ -1,4 +1,6 @@
 import os
+import sys
+import ctypes
 import socket
 import struct
 import time
@@ -116,9 +118,16 @@ root.bind('<Double-Button-1>', toggle_fullscreen)
 
 def on_close():
     stop_event.set()
+    # スクリーンセーバー抑制を解除
+    if sys.platform == 'win32':
+        ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
     root.destroy()
 
 root.protocol("WM_DELETE_WINDOW", on_close)
+
+# スクリーンセーバーとディスプレイOFFを抑制
+if sys.platform == 'win32':
+    ctypes.windll.kernel32.SetThreadExecutionState(0x80000000 | 0x00000002)
 
 # 速度の数字表示（フォントサイズや色は自由に変えられます）
 label_speed = tk.Label(root, text="0", font=("Helvetica", 200, "bold"), fg="white", bg="black")
