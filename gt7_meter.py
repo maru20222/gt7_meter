@@ -128,6 +128,14 @@ label_speed.pack(expand=True, pady=(50, 0))
 label_unit = tk.Label(root, text="km/h", font=("Helvetica", 30), fg="gray", bg="black")
 label_unit.pack(expand=True, pady=(0, 50))
 
+# ウィンドウサイズ変更時にスピード文字サイズを追従させる
+def on_resize(event):
+    # ウィンドウ高さの約45%をフォントサイズとして使用
+    new_size = max(40, int(event.height * 0.45))
+    label_speed.config(font=("Helvetica", new_size, "bold"))
+
+root.bind('<Configure>', on_resize)
+
 # UDP受信を別スレッドで開始
 threading.Thread(target=udp_worker, daemon=True).start()
 
